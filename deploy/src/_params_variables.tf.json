@@ -1,0 +1,40 @@
+{
+    "variable": {
+        "database_name": {
+            "type": "string",
+            "default": null
+        },
+        "image": {
+            "type": "any",
+            "default": null
+        },
+        "ingress": {
+            "type": "any",
+            "default": null
+        },
+        "log_level": {
+            "type": "string",
+            "default": null
+        },
+        "namespace": {
+            "type": "string",
+            "default": null
+        },
+        "port": {
+            "type": "number",
+            "default": null
+        },
+        "rails_env": {
+            "type": "string",
+            "default": null
+        },
+        "replicas": {
+            "type": "any",
+            "default": null
+        },
+        "resourceRequests": {
+            "type": "any",
+            "default": null
+        }
+    }
+}

@@ -1,0 +1,8 @@
+{
+    "variable": {
+        "md_metadata": {
+            "type": "any",
+            "default": null
+        }
+    }
+}

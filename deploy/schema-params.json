@@ -1,0 +1,268 @@
+{
+    "$id": "https://schemas.massdriver.cloud/schemas/bundles/rails-spree/schema-params.json",
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "description": "Ruby on Rails (Spree) Demo Running on Kubernetes",
+    "examples": [
+        {
+            "__name": "Development",
+            "image": {
+                "tag": "latest"
+            },
+            "log_level": "info",
+            "namespace": "development",
+            "port": 3000,
+            "resourceRequests": {
+                "cpu": 0.25
+            }
+        },
+        {
+            "__name": "Production",
+            "image": {
+                "tag": "latest"
+            },
+            "log_level": "error",
+            "namespace": "production",
+            "port": 3000,
+            "replicas": {
+                "autoscalingEnabled": true,
+                "maxReplicas": 10,
+                "minReplicas": 2,
+                "targetCPUUtilizationPercentage": 80
+            },
+            "resourceRequests": {
+                "cpu": 0.5
+            }
+        }
+    ],
+    "properties": {
+        "database_name": {
+            "title": "Database Name",
+            "type": "string"
+        },
+        "image": {
+            "properties": {
+                "repository": {
+                    "$md.immutable": true,
+                    "description": "Full container repository URI. Kubernetes clusters are configured with access to your cloud's container repositories in the same account. Optionally this value can be hard coded in `values.yaml`.",
+                    "title": "Repository",
+                    "type": "string"
+                },
+                "tag": {
+                    "$schema": "http://json-schema.org/draft-07/schema",
+                    "default": "latest",
+                    "description": "Container repository tag.",
+                    "message": {
+                        "pattern": "Tag may contain at most 128 characters composed of lowercase and uppercase letters, digits, underscores, periods and dashes. Tag must start with an alphanumeric character."
+                    },
+                    "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]{0,127}$",
+                    "title": "Tag",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "repository",
+                "tag"
+            ],
+            "title": "Container Image",
+            "type": "object"
+        },
+        "ingress": {
+            "dependencies": {
+                "enabled": {
+                    "oneOf": [
+                        {
+                            "properties": {
+                                "enabled": {
+                                    "const": false
+                                }
+                            }
+                        },
+                        {
+                            "properties": {
+                                "enabled": {
+                                    "const": true
+                                },
+                                "host": {
+                                    "description": "The hostname which this application should be accessable on, such as www.example.com. You must own this domain and have it associated with this kubernetes cluster if you would like automatic DNS record and SSL certificate management. Learn more about DNS Zones [here](https://docs.massdriver.cloud/platform/dns-zones).",
+                                    "message": {
+                                        "pattern": "Hostname should consist of letters, numbers, periods and hyphens, such as www.example.com"
+                                    },
+                                    "pattern": "^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\\-]*[A-Za-z0-9])$",
+                                    "title": "HTTP Hostname",
+                                    "type": "string"
+                                },
+                                "path": {
+                                    "default": "/",
+                                    "description": "The HTTP path which, when appended to the host above, this application will serve traffic on",
+                                    "message": {
+                                        "pattern": "Must begin with a '/' and be a valid HTTP endpoint"
+                                    },
+                                    "pattern": "^\\/.*$",
+                                    "title": "HTTP Path",
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "host",
+                                "path"
+                            ]
+                        }
+                    ]
+                }
+            },
+            "description": "Configure the application for public internet accessibility",
+            "properties": {
+                "enabled": {
+                    "default": false,
+                    "title": "Enable Public Internet Access",
+                    "type": "boolean"
+                }
+            },
+            "title": "Ingress",
+            "type": "object"
+        },
+        "log_level": {
+            "default": "info",
+            "enum": [
+                "debug",
+                "info",
+                "warn",
+                "error",
+                "fatal"
+            ],
+            "title": "Log Level",
+            "type": "string"
+        },
+        "namespace": {
+            "$schema": "http://json-schema.org/draft-07/schema",
+            "default": "default",
+            "description": "Application will be deployed into this namespace. If the namespace doesn't exist, it will be created.",
+            "message": {
+                "pattern": "Name must follow RFC 1123: at most 63 characters, only lowercase alphanumeric characters or '-', and start and end with an alphanumeric character."
+            },
+            "pattern": "^(?:[a-z0-9]|[a-z0-9][a-z0-9-]{0,61}[a-z0-9])$",
+            "title": "Kubernetes Namespace",
+            "type": "string"
+        },
+        "port": {
+            "$schema": "http://json-schema.org/draft-07/schema",
+            "default": 3000,
+            "description": "Port number",
+            "maximum": 65535,
+            "minimum": 0,
+            "title": "Port",
+            "type": "integer"
+        },
+        "rails_env": {
+            "default": "development",
+            "enum": [
+                "production"
+            ],
+            "title": "Rails Environment",
+            "type": "string"
+        },
+        "replicas": {
+            "dependencies": {
+                "autoscalingEnabled": {
+                    "oneOf": [
+                        {
+                            "properties": {
+                                "autoscalingEnabled": {
+                                    "const": false
+                                },
+                                "replicaCount": {
+                                    "default": 1,
+                                    "description": "Fixed number of replicas to constantly maintain",
+                                    "minimum": 1,
+                                    "title": "Number of Replicas",
+                                    "type": "integer"
+                                }
+                            },
+                            "required": [
+                                "replicaCount"
+                            ]
+                        },
+                        {
+                            "properties": {
+                                "autoscalingEnabled": {
+                                    "const": true
+                                },
+                                "maxReplicas": {
+                                    "default": 10,
+                                    "description": "Maximum number of replicas the autoscaler will provision, based on target resource utilization",
+                                    "minimum": 1,
+                                    "title": "Maximum Replicas",
+                                    "type": "integer"
+                                },
+                                "minReplicas": {
+                                    "default": 1,
+                                    "description": "Minimum number of replicas the autoscaler will maintain, based on target resource utilization",
+                                    "minimum": 1,
+                                    "title": "Minimum Replicas",
+                                    "type": "integer"
+                                },
+                                "targetCPUUtilizationPercentage": {
+                                    "default": 80,
+                                    "description": "The percentage of allocated CPU resources the autoscaler should target, based on the values specified in the 'Resources' section. If utilization rises sufficiently above this percentage, replicas will be added. If utilization drops sufficiently below this percentage, replicas will be removed.",
+                                    "minimum": 1,
+                                    "title": "Target CPU Utilization Percentage",
+                                    "type": "integer"
+                                }
+                            },
+                            "required": [
+                                "minReplicas",
+                                "maxReplicas",
+                                "targetCPUUtilizationPercentage"
+                            ]
+                        }
+                    ]
+                }
+            },
+            "description": "Manage the number of concurrent replicas of your application",
+            "properties": {
+                "autoscalingEnabled": {
+                    "default": false,
+                    "description": "A Horizontal Pod Autoscaler will enable your application to automatically add or remove replicas based on resource utilization.",
+                    "title": "Enable Horizontal Pod Autoscaling",
+                    "type": "boolean"
+                }
+            },
+            "title": "Replicas",
+            "type": "object"
+        },
+        "resourceRequests": {
+            "description": "The minimum amount of compute resources required.",
+            "properties": {
+                "cpu": {
+                    "default": 0.5,
+                    "description": "The expected CPU cores required for this application. Fractional numbers are allowed (0.5 is one half of a CPU core).",
+                    "minimum": 0.001,
+                    "title": "CPU Cores",
+                    "type": "number"
+                },
+                "memory": {
+                    "default": 524288000,
+                    "description": "The expected Memory resources required for this application.",
+                    "title": "Memory",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "cpu",
+                "memory"
+            ],
+            "title": "Resources",
+            "type": "object"
+        }
+    },
+    "required": [
+        "log_level",
+        "port",
+        "database_name",
+        "rails_env",
+        "image",
+        "resourceRequests",
+        "namespace"
+    ],
+    "title": "rails-spree"
+}

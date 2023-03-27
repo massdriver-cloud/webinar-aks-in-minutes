@@ -1,0 +1,50 @@
+{
+    "image": {
+        "ui:options": {
+            "label": false
+        },
+        "ui:order": [
+            "repository",
+            "tag"
+        ]
+    },
+    "ingress": {
+        "ui:order": [
+            "enabled",
+            "host",
+            "path",
+            "*"
+        ]
+    },
+    "replicas": {
+        "ui:order": [
+            "autoscalingEnabled",
+            "replicaCount",
+            "minReplicas",
+            "maxReplicas",
+            "targetCPUUtilizationPercentage",
+            "*"
+        ]
+    },
+    "resourceRequests": {
+        "memory": {
+            "ui:field": "conversionFieldData",
+            "unit": "Bytes"
+        },
+        "ui:order": [
+            "cpu",
+            "memory"
+        ]
+    },
+    "ui:order": [
+        "image",
+        "rails_env",
+        "database_name",
+        "port",
+        "log_level",
+        "ingress",
+        "resourceRequests",
+        "replicas",
+        "namespace"
+    ]
+}
