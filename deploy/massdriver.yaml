@@ -1,7 +1,7 @@
 schema: draft-07
-name: rails-spree
+name: ecomm-api
 description: Ruby on Rails (Spree) Demo Running on Kubernetes
-source_url: github.com/massdriver-cloud/application-examples/tree/main/k8s/rails-spree
+source_url: github.com/massdriver-cloud/webinar-aks-in-minutes/tree/main/deploy
 access: private
 type: application
 
@@ -88,7 +88,6 @@ params:
         - tag
       properties:
         repository:
-          $md.immutable: true
           title: Repository
           description: Full container repository URI. Kubernetes clusters are configured with access to your cloud's container repositories in the same account. Optionally this value can be hard coded in `values.yaml`.
           type: string

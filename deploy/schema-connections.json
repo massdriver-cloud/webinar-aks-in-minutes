@@ -1,5 +1,5 @@
 {
-    "$id": "https://schemas.massdriver.cloud/schemas/bundles/rails-spree/schema-connections.json",
+    "$id": "https://schemas.massdriver.cloud/schemas/bundles/ecomm-api/schema-connections.json",
     "$schema": "http://json-schema.org/draft-07/schema",
     "description": "Ruby on Rails (Spree) Demo Running on Kubernetes",
     "properties": {
@@ -915,7 +915,7 @@
                                             "additionalProperties": false,
                                             "description": "IAM Policies",
                                             "patternProperties": {
-                                                "^[a-z-/]+$": {
+                                                "^[a-z]+[a-z_]*[a-z]+$": {
                                                     "properties": {
                                                         "policy_arn": {
                                                             "$schema": "http://json-schema.org/draft-07/schema",
@@ -1072,7 +1072,7 @@
                                             "additionalProperties": false,
                                             "description": "IAM Roles And Conditions",
                                             "patternProperties": {
-                                                "^[a-z-/]+$": {
+                                                "^[a-z]+[a-z_]*[a-z]$": {
                                                     "properties": {
                                                         "condition": {
                                                             "description": "GCP IAM Condition",
@@ -1090,7 +1090,7 @@
                                                             "message": {
                                                                 "pattern": "Must be a valid GCP Role, e.g. roles/..."
                                                             },
-                                                            "pattern": "^roles/[a-zA-Z\\.]+$",
+                                                            "pattern": "^roles/[a-zA-Z0-9\\.]+$",
                                                             "title": "Role"
                                                         }
                                                     },
@@ -1330,7 +1330,7 @@
                                             "additionalProperties": false,
                                             "description": "IAM Policies",
                                             "patternProperties": {
-                                                "^[a-z-/]+$": {
+                                                "^[a-z]+[a-z_]*[a-z]+$": {
                                                     "properties": {
                                                         "policy_arn": {
                                                             "$schema": "http://json-schema.org/draft-07/schema",
@@ -1443,7 +1443,7 @@
                                             "additionalProperties": false,
                                             "description": "IAM Roles And Conditions",
                                             "patternProperties": {
-                                                "^[a-z-/]+$": {
+                                                "^[a-z]+[a-z_]*[a-z]$": {
                                                     "properties": {
                                                         "condition": {
                                                             "description": "GCP IAM Condition",
@@ -1461,7 +1461,7 @@
                                                             "message": {
                                                                 "pattern": "Must be a valid GCP Role, e.g. roles/..."
                                                             },
-                                                            "pattern": "^roles/[a-zA-Z\\.]+$",
+                                                            "pattern": "^roles/[a-zA-Z0-9\\.]+$",
                                                             "title": "Role"
                                                         }
                                                     },
@@ -1590,5 +1590,5 @@
         "postgres",
         "redis"
     ],
-    "title": "rails-spree"
+    "title": "ecomm-api"
 }

@@ -1,5 +1,5 @@
 {
-    "$id": "https://schemas.massdriver.cloud/schemas/bundles/rails-spree/schema-params.json",
+    "$id": "https://schemas.massdriver.cloud/schemas/bundles/ecomm-api/schema-params.json",
     "$schema": "http://json-schema.org/draft-07/schema",
     "description": "Ruby on Rails (Spree) Demo Running on Kubernetes",
     "examples": [
@@ -264,5 +264,5 @@
         "resourceRequests",
         "namespace"
     ],
-    "title": "rails-spree"
+    "title": "ecomm-api"
 }

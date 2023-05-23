@@ -6,7 +6,7 @@ This runs a demo of the e-commerce platform Spree using the `rails-kubernetes` a
 
 * [Rails Kubernetes Application Template](https://github.com/massdriver-cloud/application-templates/tree/main/rails-kubernetes)
 * [Spree Starter Example App Source Code](https://github.com/massdriver-cloud/spree_starter)
-* [Example Spree App Bundle Source Code](https://github.com/massdriver-cloud/application-examples/tree/main/k8s/rails-spree)
+* [Example Spree App Bundle Source Code](https://github.com/massdriver-cloud/webinar-aks-in-minutes/tree/main/deploy)
 ## Setup
 
 The admin email and password can be set via secrets added on this bundle:
